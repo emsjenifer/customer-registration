@@ -4,43 +4,42 @@ import { Customer } from '../model/customer';
 @Injectable({
   providedIn: 'root'
 })
-export class CustomerService  {
-
-  custormers:Customer[] = []
+export class CustomerService {
+  customers: Customer[] = [];
 
   constructor() {
-   let customer:Customer = {
-      id: 1,
-      name: "Carlos",
-      email: "carlos@carlos.com",
-      birthDay: new Date("1984-06-18")
+    this.loadCustomersFromLocalStorage();
   }
 
-  let customer2 = <Customer>{
-    id: 2,
-    name: "Jose",
-    email: "jose@carlos.com",
-    birthDay: new Date("1984-06-18")
+  getList(): Customer[] {
+    return this.customers;
   }
 
-    this.custormers.push(customer);
-    this.custormers.push(customer2);
+  update(customer: Customer) {
+    const existingCustomer = this.customers.find(c => c.id === customer.id);
+    if (existingCustomer) {
+      Object.assign(existingCustomer, customer);
+    } else {
+      this.customers.push(customer);
+    }
 
+    this.saveCustomersToLocalStorage();
   }
 
-  getList():Customer[] {
-    return this.custormers;
+  delete(id: number) {
+    this.customers = this.customers.filter(c => c.id !== id);
+
+    this.saveCustomersToLocalStorage();
   }
 
-  add(customer:Customer){
-
-    this.custormers.push(customer);
-
+  private saveCustomersToLocalStorage() {
+    localStorage.setItem('customers', JSON.stringify(this.customers));
   }
 
-  update(customer:Customer){
-  }
-
-  delete(id:number ){
+  private loadCustomersFromLocalStorage() {
+    const storedCustomers = localStorage.getItem('customers');
+    if (storedCustomers) {
+      this.customers = JSON.parse(storedCustomers);
+    }
   }
 }

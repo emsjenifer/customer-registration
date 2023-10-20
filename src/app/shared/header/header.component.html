@@ -1,15 +1,17 @@
-<nav class="navbar navbar-light bg-light">
-  <a class="navbar-brand" href="#">
-    <img src="/docs/4.1/assets/brand/bootstrap-solid.svg" width="30" height="30" alt="">
-  </a>
-  <form class="form-inline">
-    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-  </form>
-</nav>
-<nav class="navbar navbar-light bg-light">
-  <form class="form-inline">
-    <button class="btn btn-outline-success" type="button">Main button</button>
-    <button class="btn btn-sm btn-outline-secondary" type="button">Smaller button</button>
-  </form>
-</nav>
+<header>
+  <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+      <img src="/docs/4.1/assets/brand/bootstrap-solid.svg" width="30" height="30" alt="">
+    </a>
+    <form class="form-inline">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </nav>
+  <nav class="navbar navbar-light bg-light">
+    <form class="form-inline">
+      <button [routerLink]="['/customers/list']" [routerLinkActive]="['active']" class="btn btn-sm btn-light" type="button">Listar clientes</button>
+      <button [routerLink]="['/customers/edit']" [routerLinkActive]="['active']" class="btn btn-sm btn-light" type="button">Editar clientes</button>
+    </form>
+  </nav>
+</header>
