@@ -9,19 +9,26 @@ import { CustomerService } from '../../../services/customer.service';
     templateUrl: './customers-list.component.html',
     styleUrls: ['./customers-list.component.sass']
   })
-  export class CustomersListComponent {
+  export class CustomersListComponent implements OnInit {
     customers: Customer[] = [];
+    customerIdSelectedToDelete:number = -1;
   
-    constructor(private customerService: CustomerService, private router: Router) {
-      this.customers = this.customerService.getList();
+    constructor(private customerService: CustomerService, private router: Router) {}
+
+    ngOnInit(): void {
+      this.customers =  this.customerService.getList();
     }
   
-    editarCliente(customer: Customer) {
-      this.router.navigate(['/customers-edit', customer.id]);
+    goToCustomerEdit(customerId: number) {
+      this.router.navigate(['customers', 'edit', customerId]);
     }
   
-    excluirCliente(customerId: number) {
-      this.customerService.delete(customerId);
-      this.customers = this.customerService.getList();
+    deleteCustomer() {
+      this.customerService.delete(this.customerIdSelectedToDelete);
+      this.ngOnInit()
+    }
+
+    openModalConfirmDelete(id:number){
+      this.customerIdSelectedToDelete = id;
     }
   }

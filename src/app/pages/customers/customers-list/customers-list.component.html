@@ -1,5 +1,12 @@
 <div class="container">
-    <h3>Cadastro de clientes</h3>
+    <div class="row align-items-start">
+        <div class="col">
+             <h2>Cadastro de Clientes</h2>
+        </div>
+        <div class="col-2 d-flex justify-content-end">
+             <button type="button" (click)="goToCustomerEdit(-1)" class="btn btn-primary">Adicionar <i class="bi bi-plus-circle"></i></button>
+        </div>
+    </div>
     <table  class="table">
         <thead class="thead-dark">
             <tr>
@@ -14,13 +21,30 @@
             <tr *ngFor="let customer of customers">
                 <td>{{ customer.id }}</td>
                 <td>{{ customer.name }}</td>
-                <td>{{ customer.birthDay }}</td>
+                <td>{{ customer.birthDay  | date: "dd/MM/yyyy" : 'UTC' }}</td>
                 <td>{{ customer.email }}</td>
                 <td>
-                    <button (click)="editarCliente(customer)">Editar</button>
-                    <button (click)="excluirCliente(customer.id)">Excluir</button>
+                    <button class="btn btn-secondary me-1" (click)="goToCustomerEdit(customer.id)">Editar</button>
+                    <button class="btn btn-danger"  data-bs-toggle="modal" data-bs-target="#customerModal" (click)="openModalConfirmDelete(customer.id)">Excluir</button>
                 </td>
             </tr>
         </tbody>
     </table>
+</div>
+<div class="modal fade" id="customerModal" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="customerModalLabel">Excluir Cliente</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Deseja realmente excluir o cliente com o id {{customerIdSelectedToDelete}} ?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+          <button type="button" class="btn btn-danger" (click)="deleteCustomer()" data-bs-dismiss="modal">Sim</button>
+        </div>
+      </div>
+    </div>
 </div>

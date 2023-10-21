@@ -27,8 +27,7 @@ export class CustomerService {
   }
 
   delete(id: number) {
-    this.customers = this.customers.filter(c => c.id !== id);
-
+    this.customers = this.customers.filter(customer => customer.id !== id);
     this.saveCustomersToLocalStorage();
   }
 

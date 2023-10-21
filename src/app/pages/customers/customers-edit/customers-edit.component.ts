@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Customer } from '../../../model/customer';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { CustomerService } from '../../../services/customer.service';
 
 @Component({
@@ -8,7 +9,9 @@ import { CustomerService } from '../../../services/customer.service';
   templateUrl: './customers-edit.component.html',
   styleUrls: ['./customers-edit.component.sass']
 })
-export class CustomersEditComponent {
+export class CustomersEditComponent implements OnInit {
+  id:number = -2
+
   customer: Customer = {
     id: 0,
     name: '',
@@ -16,15 +19,21 @@ export class CustomersEditComponent {
     email: ''
   };
 
-  constructor(private customerService: CustomerService, private router: Router) {}
+  constructor(private customerService: CustomerService, private router: Router, private route: ActivatedRoute) {}
+
+  ngOnInit() {
+    const getId = this.route.snapshot.paramMap.get('id');
+    if (getId)
+        this.id = parseInt(getId)
+  }
 
   cancelar() {
-    this.router.navigate(['/customers-list']);
+    this.router.navigate(['customers', 'list']);
   }
 
   salvar() {
     console.log(this.customer);
     this.customerService.update(this.customer);
-    this.router.navigate(['/customers-list']);
+    this.router.navigate(['customers', 'list']);
   }
 }
