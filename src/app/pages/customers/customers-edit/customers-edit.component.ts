@@ -24,14 +24,14 @@ export class CustomersEditComponent implements OnInit {
   ngOnInit() {
     const getId = this.route.snapshot.paramMap.get('id');
     if (getId)
-        this.id = parseInt(getId)
+      this.id = parseInt(getId);
   }
 
-  cancelar() {
+  cancel() {
     this.router.navigate(['customers', 'list']);
   }
 
-  salvar() {
+  save() {
     console.log(this.customer);
     this.customerService.update(this.customer);
     this.router.navigate(['customers', 'list']);
