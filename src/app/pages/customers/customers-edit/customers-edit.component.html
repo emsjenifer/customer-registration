@@ -1,27 +1,29 @@
-<p *ngIf="id > 0 ">Você esta editando o id {{id}}</p>
-<p *ngIf="id < 0 ">Você esta inserindo um novo cadastro</p>
+<div>
+  <!-- <p *ngIf="id > 0 ">Você esta editando o id {{id}}</p> -->
+  <!-- <p *ngIf="id < 0 ">Você esta inserindo um novo cadastro</p> -->
 
-<form *ngIf="customer">
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="id">ID:</label>
-      <input type="text" id="id" name="id" [(ngModel)]="customer.id" />
+  <form *ngIf="customer">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="id">ID:</label>
+        <input type="text" id="id" name="id" [(ngModel)]="customer.id" />
+      </div>
+      <div class="form-group col-md-6">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="name" [(ngModel)]="customer.name" />
+      </div>
     </div>
-    <div class="form-group col-md-6">
-      <label for="nome">Nome:</label>
-      <input type="text" id="nome" name="name" [(ngModel)]="customer.name" />
+    <div class="form-group">
+      <label for="dataNascimento">Data de Nascimento:</label>
+      <input type="date" id="dataNascimento" name="birthDay" [(ngModel)]="customer.birthDay" />
     </div>
-  </div>
-  <div class="form-group">
-    <label for="dataNascimento">Data de Nascimento:</label>
-    <input type="date" id="dataNascimento" name="birthDay" [(ngModel)]="customer.birthDay" />
-  </div>
-  <div class="form-group">
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" [(ngModel)]="customer.email" />
-  </div>
-  <div>
-    <button class="btn btn-primary" (click)="cancel()">Cancelar</button>
-    <button type="submit" class="btn btn-primary" (click)="save()">Salvar</button>
-  </div>
-</form>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" [(ngModel)]="customer.email" />
+    </div>
+    <div>
+      <button class="btn btn-primary" (click)="cancel()">Cancelar</button>
+      <button type="submit" class="btn btn-primary" (click)="save()">Salvar</button>
+    </div>
+  </form>
+</div>

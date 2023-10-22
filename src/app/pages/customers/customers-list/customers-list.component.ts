@@ -21,7 +21,6 @@ import { CustomerService } from '../../../services/customer.service';
   
     goToCustomerEdit(customerId: number) {
       this.router.navigate(['customers', 'edit', customerId]);
-      this.customerService.loadCustomer(customerId);
     }
   
     deleteCustomer() {

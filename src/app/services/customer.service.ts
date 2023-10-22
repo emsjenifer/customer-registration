@@ -27,24 +27,6 @@ export class CustomerService {
     this.saveCustomersToLocalStorage();
   }
 
-  loadCustomer(id: number) {
-    const customersJson = localStorage.getItem('customers');
-    console.log('customersJson:', customersJson);
-    console.log(id);
-  
-    if (customersJson) {
-      const customers: Customer[] = JSON.parse(customersJson);
-      console.log('customers:', customers);
-  
-      const customer = customers.find(cust => cust.id === id);
-      console.log('customer:', customer);
-  
-      if (customer) {
-        this.customer = { ...customer };
-      }
-    }
-  }
-
   delete(id: number) {
     this.customers = this.customers.filter(customer => customer.id !== id);
     this.saveCustomersToLocalStorage();

@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CustomerService } from '../../../services/customer.service';
 
 @Component({
-  selector: 'app-customers-edit',
+  selector: '[app-customers-edit]',
   templateUrl: './customers-edit.component.html',
   styleUrls: ['./customers-edit.component.sass']
 })
@@ -22,9 +22,30 @@ export class CustomersEditComponent implements OnInit {
   constructor(private customerService: CustomerService, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    const getId = this.route.snapshot.paramMap.get('id');
-    if (getId)
+    const getId = this.route.snapshot.paramMap.get('customerId');
+    if (getId) {
       this.id = parseInt(getId);
+      this.loadCustomer(this.id);
+      console.log('cliente do edit', this.customer);
+    }
+  }
+
+  loadCustomer(id: number) {
+    const customersJson = localStorage.getItem('customers');
+    console.log('customersJson:', customersJson);
+    console.log(id);
+  
+    if (customersJson) {
+      const customers: Customer[] = JSON.parse(customersJson);
+      console.log('customers:', customers);
+  
+      const customer = customers.find(customer => customer.id == id);
+      console.log('customer:', customer);
+  
+      if (customer) {
+        this.customer = { ...customer };
+      }
+    }
   }
 
   cancel() {
