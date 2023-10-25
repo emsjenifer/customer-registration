@@ -6,7 +6,6 @@ import { Customer } from '../model/customer';
 })
 export class CustomerService {
   customers: Customer[] = [];
-  customer: Customer | null = null;
 
   constructor() {
     this.loadCustomersFromLocalStorage();
@@ -16,21 +15,30 @@ export class CustomerService {
     return this.customers;
   }
 
+  getById(id: string){
+    return this.customers.find( customer => customer.id === id);
+  }
+
   update(customer: Customer) {
-    const existingCustomer = this.customers.find(c => c.id === customer.id);
+    const existingCustomer =  this.getById(customer.id);
     if (existingCustomer) {
       Object.assign(existingCustomer, customer);
-    } else {
-      this.customers.push(customer);
     }
-
     this.saveCustomersToLocalStorage();
   }
 
-  delete(id: number) {
+  delete(id: string) {
     this.customers = this.customers.filter(customer => customer.id !== id);
     this.saveCustomersToLocalStorage();
   }
+
+  create(customer:Customer){
+    let uuid = self.crypto.randomUUID();
+    customer.id = uuid;
+    this.customers.push(customer);
+    this.saveCustomersToLocalStorage();
+  }
+
 
   private saveCustomersToLocalStorage() {
     localStorage.setItem('customers', JSON.stringify(this.customers));

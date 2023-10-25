@@ -11,7 +11,7 @@ import { CustomerService } from '../../../services/customer.service';
   })
   export class CustomersListComponent implements OnInit {
     customers: Customer[] = [];
-    customerIdSelected:number = -1;
+    customerIdSelectedToDelete:string = '-1'
   
     constructor(private customerService: CustomerService, private router: Router) {}
 
@@ -19,16 +19,16 @@ import { CustomerService } from '../../../services/customer.service';
       this.customers =  this.customerService.getList();
     }
   
-    goToCustomerEdit(customerId: number) {
-      this.router.navigate(['customers', 'edit', customerId]);
+    goToCustomerEdit(id: string) {
+      this.router.navigate(['customers', 'edit', id]);
     }
   
     deleteCustomer() {
-      this.customerService.delete(this.customerIdSelected);
+      this.customerService.delete(this.customerIdSelectedToDelete);
       this.ngOnInit()
     }
 
-    openModalConfirmDelete(customerId:number){
-      this.customerIdSelected = customerId;
+    openModalConfirmDelete(id:string){
+      this.customerIdSelectedToDelete = id;
     }
   }

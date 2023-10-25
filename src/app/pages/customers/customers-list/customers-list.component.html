@@ -4,7 +4,7 @@
              <h2>Cadastro de Clientes</h2>
         </div>
         <div class="col-2 d-flex justify-content-end">
-             <button type="button" (click)="goToCustomerEdit(-1)" class="btn btn-primary">Adicionar + </button>
+             <button type="button" (click)="goToCustomerEdit('newCustomer')" class="btn btn-primary">Adicionar + </button>
         </div>
     </div>
     <table  class="table">
@@ -39,7 +39,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          Deseja realmente excluir o cliente com o id {{customerIdSelected}} ?
+          Deseja realmente excluir o cliente com o id {{customerIdSelectedToDelete}} ?
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
