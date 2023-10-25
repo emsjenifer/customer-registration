@@ -26,8 +26,6 @@ export class CustomersEditComponent implements OnInit {
     const getId = this.route.snapshot.paramMap.get('id');
     if (getId) {
       this.id = getId;
-      // this.loadCustomer(this.id);
-
       const currentCustomer = this.customerService.getById(this.id);
 
         this.customers = new FormGroup({
@@ -38,24 +36,6 @@ export class CustomersEditComponent implements OnInit {
     }
   }
 
-  // loadCustomer(id: string) {
-  //   const customersJson = localStorage.getItem('customers');
-  //   console.log('customersJson:', customersJson);
-  //   console.log(id);
-  
-  //   if (customersJson) {
-  //     const customers: Customer[] = JSON.parse(customersJson);
-  //     console.log('customers:', customers);
-  
-  //     const customer = customers.find(customer => customer.id == id);
-  //     console.log('customer:', customer);
-  
-  //     if (customer) {
-  //       customer = { ...customer };
-  //     }
-  //   }
-  // }
-
   onSubmit(customer:Customer) {
     if (this.id === 'newCustomer')
       this.customerService.create(customer);
@@ -65,15 +45,6 @@ export class CustomersEditComponent implements OnInit {
     }
 
   }
-
-  // cancel() {
-  //   this.router.navigate(['customers', 'list']);
-  // }
-
-  // save() {
-  //   this.customerService.update(this.customer);
-  //   this.router.navigate(['customers', 'list']);
-  // }
 
   emailValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
