@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Customer } from 'src/app/model/customer';
-import { CustomerService } from 'src/app/services/customer.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { LoginService } from '../../services/login.service';
+import { User } from '../../model/user';
+import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -8,21 +11,46 @@ import { CustomerService } from 'src/app/services/customer.service';
   styleUrls: ['./home.component.sass']
 })
 export class HomeComponent implements OnInit {
+  username = ''
+  password = ''
+  userAdmin: FormGroup;
 
-  contador = 0;
-  homeText = "";
-
-  constructor (private customerService: CustomerService){
-
+  constructor(private loginService: LoginService, private route: ActivatedRoute, private router: Router, private toastr: ToastrService) {
+    this.userAdmin = new FormGroup({
+      username: new FormControl('',[Validators.required]),
+      password: new FormControl('',[Validators.required]),
+    });
   }
 
-  ngOnInit(): void {
-    this.contador+=1;
-    this.homeText = this.customerService.getList()[0].name;
+  ngOnInit() {
+    console.log(this.loginService.getUserFromLocalStorage())
+
+    const currentUser = this.loginService.getUserFromLocalStorage()
+    if (currentUser && currentUser.length > 0) {
+      this.username = JSON.parse(currentUser)[0].username;
+      this.password = JSON.parse(currentUser)[0].password;
+    } else {
+      this.username = 'N/A';
+    }
+    console.log(this.checkUser())
   }
 
-  adicionar(){
-    this.contador++;
-    console.log(this.contador)
+  checkUser(): boolean {
+    return !!this.username && !!this.password;
+  }
+
+
+  onRegisterSubmit(userAdmin: User) {
+    this.loginService.saveUserToLocalStorage(userAdmin);
+    location.reload();
+  }
+
+  onLoginSubmit(userAdmin: User) {
+    if (this.username == userAdmin.username && this.password == userAdmin.password) {
+      this.router.navigate(['customers', 'list']);
+      this.toastr.success('Bem vindo(a)!', 'Olá!');
+    } else {
+      this.toastr.error('Usuário ou senha inexistente.', 'Erro');
+    }
   }
 }

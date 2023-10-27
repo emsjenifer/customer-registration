@@ -1,1 +1,22 @@
-
+<div *ngIf="!checkUser(); else elseBlock">
+  <form [formGroup]="userAdmin" (ngSubmit)="onRegisterSubmit(userAdmin.value)">
+    <label for="username">Username:</label>
+    <input type="text" id="username" formControlName="username" required>
+    
+    <label for="password">Password:</label>
+    <input type="password" id="password" formControlName="password" required>
+    
+    <button type="submit" [disabled]="!userAdmin.valid">Register</button>
+  </form>
+</div>
+<ng-template #elseBlock>
+  <form [formGroup]="userAdmin" (ngSubmit)="onLoginSubmit(userAdmin.value)">
+    <label for="username">Username:</label>
+    <input type="text" id="username" formControlName="username" required>
+    
+    <label for="password">Password:</label>
+    <input type="password" id="password" formControlName="password" required>
+    
+    <button type="submit" [disabled]="!userAdmin.valid">Login</button>
+  </form>
+</ng-template>

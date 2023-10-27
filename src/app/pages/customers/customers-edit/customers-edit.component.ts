@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Customer } from '../../../model/customer';
 import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CustomerService } from '../../../services/customer.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: '[app-customers-edit]',
@@ -11,10 +12,10 @@ import { CustomerService } from '../../../services/customer.service';
 })
 export class CustomersEditComponent implements OnInit {
 
-  id:string = 'newCustomer';
-  customers : FormGroup
+  id: string = 'newCustomer';
+  customers: FormGroup
 
-  constructor(private customerService: CustomerService, private route: ActivatedRoute) {
+  constructor(private customerService: CustomerService, private route: ActivatedRoute, private router: Router, private toastr: ToastrService) {
     this.customers = new FormGroup({
       name: new FormControl('',[Validators.required, Validators.minLength(3)]),
       birthDay: new FormControl('',[Validators.required]),
@@ -36,15 +37,22 @@ export class CustomersEditComponent implements OnInit {
     }
   }
 
-  onSubmit(customer:Customer) {
-    if (this.id === 'newCustomer')
-      this.customerService.create(customer);
-    else {
-      customer.id = this.id;
-      this.customerService.update(customer);
+  async onSubmit(customer:Customer) {
+    try {
+      if (this.id === 'newCustomer') {
+        await this.customerService.create(customer);
+        this.toastr.success('Cliente cadastrado com sucesso!', 'Sucesso');
+      }
+      else {
+        customer.id = this.id;
+        await this.customerService.update(customer);
+        this.toastr.success('Dados atualizados com sucesso!', 'Sucesso');
+      }
+      this.router.navigate(['customers', 'list']);
+    } catch (error) {
+      this.toastr.error('Erro ao salvar o cliente.', 'Erro');
     }
-
-  }
+  } 
 
   emailValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
