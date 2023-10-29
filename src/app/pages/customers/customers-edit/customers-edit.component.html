@@ -1,10 +1,10 @@
 <app-header></app-header>
 
-<div>
-  <p *ngIf="id !== 'newCustomer'  ">Você esta editando o id {{id}}</p>
-  <p *ngIf="id === 'newCustomer' ">Você esta inserindo um novo cadastro</p>
-
+<div class="container">
   <form [formGroup]="customers" (ngSubmit)="onSubmit(customers.value)">
+    <h1 *ngIf="id !== 'newCustomer'  ">Você esta editando o cadastro de {{ customers.value.name }}</h1>
+    <h1 *ngIf="id === 'newCustomer' ">Você esta inserindo um novo cadastro</h1>
+    
     <div class="form-floating mb-3">
       <input type="text" class="form-control" id="name" formControlName="name" placeholder="João da Silva">
       <div *ngIf="customers.get('name')?.invalid && (customers.get('name')?.dirty || customers.get('name')?.touched)">

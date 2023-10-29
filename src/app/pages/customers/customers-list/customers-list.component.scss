@@ -1,0 +1,22 @@
+.container {
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+button.btn-primary {
+  font-size: 15px;
+  background-color: #000;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button.btn-primary:disabled {
+  font-size: 15px;
+  background-color: #ccc;
+  cursor: not-allowed;
+}
